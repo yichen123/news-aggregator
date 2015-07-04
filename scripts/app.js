@@ -257,18 +257,17 @@ APP.Main = (function() {
 
         var height = main.offsetHeight;
         var windowTop = document.body.getBoundingClientRect().top;
+        var windowBottom = document.body.getBoundingClientRect().bottom;
         var storyScores = document.querySelectorAll('.story__score');
-        // It does seem awfully broad to change all the
-        // colors every time!
-        for (var s = 0; s < storyScores.length; s++) {
 
-            // Base the scale on the y position of the score.
-            var scoreLocation = storyScores[s].getBoundingClientRect().top - windowTop;
-
-            // Now figure out how wide it is and use that to saturate it.
-            var saturation = (100 - scoreLocation / 20);
-
-            storyScores[s].style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
+        // selected scores that only appear on scree
+        for (var s = 0; s < storyScores.length; s += 1) {
+            var scorePosition = storyScores[s].getBoundingClientRect().top;
+            if (scorePosition >= windowTop && scorePosition <= windowBottom) {
+                var scoreLocation = scorePosition- windowTop;
+                var saturation = (100 - scoreLocation / 20);
+                storyScores[s].style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
+            }
         }
     }
 
