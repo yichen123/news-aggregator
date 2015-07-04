@@ -259,15 +259,20 @@ APP.Main = (function() {
         var windowTop = document.body.getBoundingClientRect().top;
         var windowBottom = document.body.getBoundingClientRect().bottom;
         var storyScores = document.querySelectorAll('.story__score');
-
+        var scorePositions = [];
+        var scoreSelected = [];
         // selected scores that only appear on scree
         for (var s = 0; s < storyScores.length; s += 1) {
             var scorePosition = storyScores[s].getBoundingClientRect().top;
             if (scorePosition >= windowTop && scorePosition <= windowBottom) {
-                var scoreLocation = scorePosition- windowTop;
-                var saturation = (100 - scoreLocation / 20);
-                storyScores[s].style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
+                scoreSelected.push(storyScores[s]);
+                scorePositions.push(scorePosition);
             }
+        }
+        for (var s = 0; s < scoreSelected.length; s += 1) {
+            var scoreLocation = scorePositions[s]- windowTop;
+            var saturation = (100 - scoreLocation / 20);
+            scoreSelected[s].style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
         }
     }
 
